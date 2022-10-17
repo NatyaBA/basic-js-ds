@@ -23,22 +23,24 @@ const { NotImplementedError } = require('../extensions/index.js');
  * }
  */
 function removeKFromList(l, k) {
-  if (l === null) {
-    return l;
-  } else {
-    if (l.next) {
-      if (l.value === k) {
-        l = l.next;
-        l = removeKFromList(l, k);
+  let current = l;
+  let prev = null;
+
+  while (current) {
+    if (current.value === k) {
+      if (!prev) {
+        l.value = current.next.value;
+        l.next = current.next.next;
       } else {
-        l.next = removeKFromList(l.next, k);
+        prev.next = current.next;
       }
     } else {
-      if (l.value === k) {
-        l = null;
-      }
+      prev = current;
     }
+
+    current = current.next;
   }
+
   return l;
 }
 
